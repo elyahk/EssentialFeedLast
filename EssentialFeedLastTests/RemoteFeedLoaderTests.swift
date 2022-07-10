@@ -9,8 +9,16 @@ import Foundation
 import XCTest
 
 class RemoteFeedLoader {
+    let client: HTTPClient
+    let url: URL
+
+    init(url: URL, client: HTTPClient) {
+        self.url = url
+        self.client = client
+    }
+
     func load() {
-        HTTPClient.shared.get(from: URL(string: "https://google.com/a")!)
+        client.get(from: url)
     }
 }
 
@@ -30,21 +38,21 @@ class HTTPClientSpy: HTTPClient {
 
 class RemoteFeedLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
+        let url = URL(string: "https://google.com/a")!
         let client = HTTPClientSpy()
-        HTTPClient.shared = client
-        _ = RemoteFeedLoader()
+        _ = RemoteFeedLoader(url: url,client: client)
 
         XCTAssertNil(client.requestedURL)
     }
 
     func test_load_requestsDataFromURL() {
+        let url = URL(string: "https://another-url.com")!
         let client = HTTPClientSpy()
-        HTTPClient.shared = client
-        let sut = RemoteFeedLoader()
+        let sut = RemoteFeedLoader(url: url, client: client)
 
         sut.load()
 
-        XCTAssertNotNil(client.requestedURL)
+        XCTAssertEqual(client.requestedURL, url)
 
     }
 }
