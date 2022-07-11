@@ -64,12 +64,49 @@ class RemoteFeedLoaderTests: XCTestCase {
 
     func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJsONList() {
         let (sut, client) = makeSUT()
-        
+
         expect(sut, toCompleteWith: .success([]), when: {
             let emptyListJson = Data("{\"items\": []}".utf8)
             client.complete(withStatusCode: 200, data: emptyListJson)
         })
      }
+
+    func test_load_deliversItemsOn200HTTPResponseWithJSONItems() {
+        let (sut, client) = makeSUT()
+
+        let item1 = FeedItem(
+            id: UUID(),
+            description: nil,
+            location: nil,
+            imageURL: URL(string: "https://a-image-url.com")!)
+
+        let item1JSON = [
+            "id": item1.id.uuidString,
+            "image": item1.imageURL.description
+        ]
+
+        let item2 = FeedItem(
+            id: UUID(),
+            description: "a description",
+            location: "a location",
+            imageURL: URL(string: "https://another-image-url.com")!)
+
+        let item2JSON = [
+            "id": item2.id.uuidString,
+            "description": item2.description,
+            "location": item2.location,
+            "image": item2.imageURL.description
+        ]
+
+        let itemsJSON = [
+            "items": [item1JSON, item2JSON]
+        ]
+
+        expect(sut, toCompleteWith: .success([item1, item2]), when: {
+            let json = try! JSONSerialization.data(withJSONObject: itemsJSON)
+            client.complete(withStatusCode: 200, data: json)
+        })
+    }
 
     // MARK: - Helpers
 
@@ -91,7 +128,7 @@ class RemoteFeedLoaderTests: XCTestCase {
 
         action()
 
-        XCTAssertEqual(capturedResults, [result])
+        XCTAssertEqual(capturedResults, [result], file: file, line: line)
     }
 
     private class HTTPClientSpy: HTTPClient {
