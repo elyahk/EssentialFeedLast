@@ -61,6 +61,11 @@ class RemoteFeedLoaderTests: XCTestCase {
             client.complete(withStatusCode: 400, data: invalidData)
         }
     }
+//
+//    func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJsONList() {
+//        let (sut, client) = makeSUT()
+//
+//     }
 
     // MARK: - Helpers
 
@@ -77,12 +82,12 @@ class RemoteFeedLoaderTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        var capturedErrors: [RemoteFeedLoader.Error] = []
-        sut.load { capturedErrors.append($0) }
+        var capturedResults: [RemoteFeedLoader.Result] = []
+        sut.load { capturedResults.append($0) }
 
         action()
 
-        XCTAssertEqual(capturedErrors, [error])
+        XCTAssertEqual(capturedResults, [.failure(error)])
     }
 
     private class HTTPClientSpy: HTTPClient {
