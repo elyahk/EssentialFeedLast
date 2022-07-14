@@ -27,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C09C61D287FCB09001F3EA6 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2C3C5A49287E7DAE00982758 /* FeedItemaMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemaMapper.swift; sourceTree = "<group>"; };
 		2C8D025D2859B1E10023E508 /* EssentialFeedLast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeedLast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C8D02652859B1E20023E508 /* EssentialFeedLastTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedLastTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +68,7 @@
 		2C8D02532859B1E10023E508 = {
 			isa = PBXGroup;
 			children = (
+				2C09C61D287FCB09001F3EA6 /* MyPlayground.playground */,
 				2C8D025F2859B1E10023E508 /* EssentialFeedLast */,
 				2C8D02692859B1E20023E508 /* EssentialFeedLastTests */,
 				2C8D025E2859B1E10023E508 /* Products */,
